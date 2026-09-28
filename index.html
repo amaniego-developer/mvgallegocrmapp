@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gallegan Cares Portal | MV Gallego Enrollment-to-Employment Portal</title>
+<meta name="description" content="Gallegan Cares Portal — an integrated virtual CRM and Student Success Management System for MV Gallego Foundation Colleges." />
+<style>
+:root{
+  --green-950:#0a2c1d;
+  --green-900:#0f3d2a;
+  --green-800:#145238;
+  --green-700:#1c6a47;
+  --green-600:#258458;
+  --green-100:#eaf5ef;
+  --gold-700:#a87400;
+  --gold-600:#c18b16;
+  --gold-500:#d7a62a;
+  --gold-100:#fff7df;
+  --cream:#fbfaf5;
+  --ink:#1f2a24;
+  --muted:#6b766f;
+  --line:#dfe7e1;
+  --white:#ffffff;
+  --red:#b42318;
+  --red-bg:#fff0ee;
+  --amber:#9a6700;
+  --amber-bg:#fff6dc;
+  --green-status:#14733c;
+  --green-bg:#e8f6ed;
+  --shadow:0 12px 35px rgba(15,61,42,.10);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--cream);color:var(--ink)}
+body{min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:268px;background:linear-gradient(180deg,var(--green-950),var(--green-900));color:#fff;display:flex;flex-direction:column;z-index:20;box-shadow:8px 0 30px rgba(0,0,0,.08)}
+.brand{padding:25px 21px 18px;border-bottom:1px solid rgba(255,255,255,.10)}
+.brand-mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--gold-500),#f4d26d);display:grid;place-items:center;color:var(--green-950);font-weight:900;font-size:18px;box-shadow:0 7px 18px rgba(215,166,42,.26)}
+.brand h1{font-family:Georgia,serif;font-size:19px;line-height:1.2;margin:13px 0 3px}
+.brand p{font-size:11px;color:#cfe3d7;margin:0;line-height:1.4}
+.nav{padding:14px 11px;overflow:auto}
+.nav-section{color:#a9c2b5;font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin:14px 9px 6px;font-weight:700}
+.nav button{width:100%;border:0;background:transparent;color:#e9f4ee;padding:11px 12px;border-radius:12px;text-align:left;display:flex;align-items:center;gap:11px;font-weight:650;font-size:13px;margin:2px 0}
+.nav button:hover{background:rgba(255,255,255,.08)}
+.nav button.active{background:linear-gradient(90deg,rgba(215,166,42,.19),rgba(255,255,255,.10));box-shadow:inset 3px 0 0 var(--gold-500);color:#fff}
+.nav-icon{width:24px;text-align:center;opacity:.95}
+.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.10);font-size:11px;color:#b4cec1}
+.app-footer{margin:6px 26px 24px;padding:18px 20px;text-align:center;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.7;background:rgba(255,255,255,.45);border-radius:14px}.app-footer strong{color:var(--green-950);font-weight:800}
+.main{margin-left:268px;width:calc(100% - 268px);min-height:100vh}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(251,250,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:13px 26px}
+.breadcrumb{font-size:12px;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.role-pill{background:var(--green-100);border:1px solid #cfe5d9;color:var(--green-900);padding:7px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.content{padding:26px;max-width:1600px;margin:auto}
+.view{display:none}.view.active{display:block}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px}
+.page-head h2{margin:0;color:var(--green-950);font-family:Georgia,serif;font-size:30px;letter-spacing:-.02em}
+.page-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);padding:10px 14px;border-radius:11px;background:#fff;color:var(--ink);font-weight:750;font-size:12px;transition:.15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 5px 13px rgba(0,0,0,.06)}
+.btn.primary{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+.btn.gold{background:linear-gradient(180deg,#e4bb4f,var(--gold-500));color:var(--green-950);border-color:var(--gold-500)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--red);border-color:#efc7c1;background:#fff9f8}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(6,minmax(0,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.kpi{padding:17px;position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-28px;top:-28px;background:rgba(215,166,42,.08)}
+.kpi .label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.kpi .num{font-size:27px;font-weight:800;margin-top:6px;color:var(--green-950)}
+.kpi .meta{font-size:10px;margin-top:5px;color:var(--muted)}
+.dashboard-grid{grid-template-columns:1.55fr 1fr;align-items:stretch;margin-top:16px}
+.card-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-head h3{margin:0;font-size:14px;color:var(--green-950)}
+.card-head small{font-size:10px;color:var(--muted)}
+.card-body{padding:18px}
+.funnel{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;height:180px}
+.funnel-bar{border-radius:12px 12px 7px 7px;background:linear-gradient(180deg,var(--gold-500),var(--green-700));display:flex;flex-direction:column;justify-content:flex-end;padding:9px 8px;color:#fff;min-height:40px;position:relative;overflow:hidden}
+.funnel-bar span{font-size:10px;opacity:.92}.funnel-bar strong{font-size:20px;line-height:1.15}.funnel-label{text-align:center;font-size:10px;color:var(--muted);margin-top:7px}
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px dashed #e5ebe7}.status-row:last-child{border-bottom:0}
+.status-left{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700}.dot{width:9px;height:9px;border-radius:50%}.dot.green{background:#40a965}.dot.amber{background:#e3a521}.dot.red{background:#d14c43}.status-value{font-size:12px;color:var(--muted);font-weight:750}
+.progress{height:8px;background:#edf2ee;border-radius:99px;overflow:hidden}.progress > span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green-700),var(--gold-500))}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:11px 12px;border-bottom:1px solid #edf0ed;text-align:left;font-size:11px;vertical-align:middle}th{color:#627067;text-transform:uppercase;font-size:9px;letter-spacing:.07em;background:#fbfcfa;position:sticky;top:0}tr:hover td{background:#fcfdfc}
+.tag{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap}.tag.green{background:var(--green-bg);color:var(--green-status)}.tag.gold{background:var(--gold-100);color:var(--gold-700)}.tag.red{background:var(--red-bg);color:var(--red)}.tag.gray{background:#eef1ef;color:#57635c}.tag.blue{background:#edf4ff;color:#28578b}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}.input,select,textarea{border:1px solid #dfe6e1;background:#fff;border-radius:10px;padding:10px 11px;color:var(--ink);outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--gold-500);box-shadow:0 0 0 3px rgba(215,166,42,.12)}.input.small{max-width:240px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:10px;font-weight:800;color:#55625a;text-transform:uppercase;letter-spacing:.06em}.field.full{grid-column:1/-1}.field textarea{min-height:100px;resize:vertical}.form-footer{display:flex;justify-content:flex-end;gap:9px;padding-top:6px}
+.modal{display:none;position:fixed;inset:0;background:rgba(4,22,14,.58);z-index:60;align-items:center;justify-content:center;padding:22px}.modal.show{display:flex}.modal-card{width:min(900px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.26)}.modal-head{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:17px;color:var(--green-950)}.modal-body{padding:20px}.x{border:0;background:#f0f2ef;border-radius:10px;width:32px;height:32px;font-weight:800}
+.profile{display:grid;grid-template-columns:230px 1fr;gap:16px}.profile-side{padding:19px}.avatar{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--green-800),var(--green-600));color:#fff;display:grid;place-items:center;font-size:23px;font-weight:900;margin-bottom:12px}.profile-side h3{margin:0;color:var(--green-950);font-family:Georgia,serif}.profile-side p{margin:4px 0;color:var(--muted);font-size:11px}.profile-side .mini{padding-top:12px;margin-top:12px;border-top:1px solid var(--line)}.profile-main .card{box-shadow:none;margin-bottom:14px}.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.info-item{background:#f8faf8;border:1px solid #ebefec;padding:10px;border-radius:10px}.info-item b{display:block;font-size:9px;color:#718078;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}.info-item span{font-size:11px;font-weight:700}.timeline{position:relative;padding-left:22px}.timeline::before{content:"";position:absolute;left:7px;top:3px;bottom:3px;width:2px;background:#dae6de}.event{position:relative;padding:0 0 15px}.event::before{content:"";position:absolute;left:-19px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--gold-500);border:3px solid #fff;box-shadow:0 0 0 1px #dbc37a}.event strong{font-size:11px}.event p{margin:3px 0 0;color:var(--muted);font-size:10px}
+.alerts{display:grid;gap:9px}.alert{border-radius:12px;border:1px solid;padding:11px 12px}.alert.red{background:var(--red-bg);border-color:#f1cbc7}.alert.amber{background:var(--amber-bg);border-color:#ecd89f}.alert.green{background:var(--green-bg);border-color:#c9e3d2}.alert strong{font-size:11px}.alert p{margin:3px 0 0;font-size:10px;color:#657168}
+.empty{padding:35px 16px;text-align:center;color:var(--muted);font-size:12px}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--green-950);color:#fff;border:1px solid rgba(255,255,255,.12);padding:12px 15px;border-radius:12px;box-shadow:0 18px 45px rgba(0,0,0,.25);font-size:11px;opacity:0;pointer-events:none;transform:translateY(12px);transition:.2s;z-index:100}.toast.show{opacity:1;transform:none}
+.chart{display:flex;gap:8px;align-items:flex-end;height:170px;padding-top:10px}.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px}.bar{width:100%;max-width:42px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--gold-500),var(--green-700));min-height:10px}.bar-col span{font-size:9px;color:var(--muted)}.bar-col b{font-size:10px;color:var(--green-950)}
+.toggle{display:flex;gap:8px;align-items:center}.toggle input{display:none}.switch{width:37px;height:21px;border-radius:99px;background:#d7ded9;position:relative;cursor:pointer}.switch:after{content:"";width:17px;height:17px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.18)}.toggle input:checked + .switch{background:var(--green-700)}.toggle input:checked + .switch:after{left:18px}
+.module-banner{background:linear-gradient(115deg,var(--green-950),var(--green-700));color:#fff;border-radius:18px;padding:18px 20px;margin-bottom:17px;position:relative;overflow:hidden}.module-banner:after{content:"";position:absolute;right:-40px;top:-60px;width:180px;height:180px;border-radius:50%;border:34px solid rgba(215,166,42,.18)}.module-banner h3{margin:0;font-family:Georgia,serif;font-size:21px}.module-banner p{margin:6px 0 0;font-size:11px;color:#d2e5db;max-width:820px}
+.metric-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.metric{padding:13px 14px;border-radius:14px;background:#fff;border:1px solid var(--line)}.metric span{display:block;font-size:9px;text-transform:uppercase;color:var(--muted);font-weight:800}.metric b{font-size:20px;color:var(--green-950);display:block;margin-top:5px}
+.login-hint{font-size:10px;color:var(--muted);padding:8px 0 0}
+@media (max-width:1200px){.kpis{grid-template-columns:repeat(3,1fr)}.dashboard-grid{grid-template-columns:1fr}.metric-strip{grid-template-columns:repeat(2,1fr)}}
+
+/* Authentication / Demo Security Layer */
+.login-screen{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 15% 10%,rgba(215,166,42,.16),transparent 32%),linear-gradient(135deg,var(--green-950),var(--green-900) 55%,#0b3121);display:grid;place-items:center;padding:24px;}
+.login-screen.hidden{display:none}
+.login-card{width:min(440px,100%);background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:26px;box-shadow:0 30px 80px rgba(0,0,0,.30);padding:34px;}
+.login-logo{width:96px;height:96px;border-radius:22px;display:block;margin:0 auto 18px;object-fit:contain;background:#fff;box-shadow:0 10px 28px rgba(0,0,0,.12);padding:8px;}
+.login-card h2{margin:0;text-align:center;font-family:Georgia,serif;color:var(--green-950);font-size:29px;}
+.login-card .subtitle{margin:7px auto 26px;max-width:340px;text-align:center;font-size:12px;line-height:1.55;color:var(--muted);}
+.login-form{display:grid;gap:14px}
+.login-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--green-900);margin-bottom:6px;display:block}
+.login-input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff;}
+.login-input:focus{border-color:var(--gold-500);box-shadow:0 0 0 3px rgba(215,166,42,.12)}
+.login-btn{width:100%;border:0;border-radius:12px;padding:13px 14px;font-weight:850;background:linear-gradient(180deg,#e4bb4f,var(--gold-500));color:var(--green-950);}
+.login-error{min-height:17px;color:var(--red);font-size:11px;font-weight:700;text-align:center;}
+.login-note{margin-top:18px;padding:11px 12px;border:1px solid #e9dfbd;background:var(--gold-100);border-radius:12px;color:#685117;font-size:10px;line-height:1.5;text-align:center;}
+.security-banner{margin:14px 26px 0;padding:11px 14px;border:1px solid #e6d6a7;background:linear-gradient(90deg,#fff8e3,#fffdf6);border-radius:14px;display:flex;align-items:flex-start;gap:10px;color:#5d4b18;font-size:11px;line-height:1.45;}
+.security-banner strong{color:var(--green-900)}
+.user-session{display:flex;align-items:center;gap:8px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:var(--green-800);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:900}
+.logout-btn{border:1px solid #d7dfda;background:#fff;color:var(--green-900);padding:8px 10px;border-radius:10px;font-size:11px;font-weight:800}
+@media (max-width:520px){.login-card{padding:26px}.security-banner{margin:12px 16px 0}}
+@media (max-width:820px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:none}.main{margin-left:0;width:100%}.mobile-menu{display:inline-flex}.content{padding:18px}.form-grid,.form-grid.three,.profile,.info-grid{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.funnel{grid-template-columns:repeat(3,1fr);height:auto}.funnel-bar{min-height:80px}.topbar{padding:11px 16px}.page-head{align-items:flex-start;flex-direction:column}.profile-side{order:0}}
+@media (min-width:821px){.mobile-menu{display:none}}
+</style>
+</head>
+<body>
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <img class="login-logo" src="https://mvgallego.edu.ph/assets/images/logo-192x192.png" alt="MV Gallego Foundation Colleges logo" onerror="this.style.display='none';">
+    <h2>Gallegan Cares Portal</h2>
+    <p class="subtitle">MV Gallego Enrollment-to-Employment Portal<br>Integrated CRM &amp; Student Success Management System</p>
+    <form id="loginForm" class="login-form" autocomplete="off">
+      <div><label class="login-label" for="loginUsername">Username</label><input class="login-input" id="loginUsername" name="username" autocomplete="username" required></div>
+      <div><label class="login-label" for="loginPassword">Password</label><input class="login-input" id="loginPassword" name="password" type="password" autocomplete="current-password" required></div>
+      <div class="login-error" id="loginError"></div>
+      <button class="login-btn" type="submit">Sign In</button>
+    </form>
+    <div class="login-note"><strong>Demo credentials</strong><br>Username: <b>president</b> &nbsp;|&nbsp; Password: <b>admin</b></div>
+  </div>
+</div>
+
+<div class="app" id="portalApp">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img class="brand-mark" src="https://mvgallego.edu.ph/assets/images/logo-192x192.png" alt="MV Gallego logo" onerror="this.style.display='none';">
+      <h1>Gallegan Cares Portal</h1>
+      <p>MV Gallego Enrollment-to-Employment Portal<br/>Virtual CRM & Student Success Management System</p>
+    </div>
+    <nav class="nav">
+      <div class="nav-section">Command Center</div>
+      <button class="active" data-view="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+      <button data-view="students"><span class="nav-icon">◉</span>Student 360°</button>
+      <button data-view="tickets"><span class="nav-icon">◈</span>Tickets & Cases</button>
+      <div class="nav-section">Institutional Modules</div>
+      <button data-view="enrollment"><span class="nav-icon">🎯</span>Marketing & Enrollment</button>
+      <button data-view="guidance"><span class="nav-icon">♡</span>Guidance & Wellbeing</button>
+      <button data-view="feedback"><span class="nav-icon">💬</span>Complaints & Feedback</button>
+      <button data-view="scholarships"><span class="nav-icon">◇</span>Scholarships & Discounts</button>
+      <button data-view="career"><span class="nav-icon">▤</span>Career & Alumni</button>
+      <button data-view="corporate"><span class="nav-icon">♧</span>Corporate Affairs</button>
+      <div class="nav-section">Governance</div>
+      <button data-view="analytics"><span class="nav-icon">◒</span>Institutional Analytics</button>
+      <button data-view="admin"><span class="nav-icon">⚙</span>Administration</button>
+    </nav>
+    <div class="sidebar-footer">Virtual database mode • Data is stored locally in this browser<br/>GC Portal Prototype • v1.0</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px"><button class="btn mobile-menu" onclick="toggleSidebar()">☰</button><div class="breadcrumb" id="breadcrumb">Gallegan Cares / Dashboard</div></div>
+      <div class="top-actions">
+        <div class="user-session"><span class="user-avatar">P</span><span class="role-pill" id="sessionRole">President / Authorized Administrator</span></div>
+        <button class="btn" onclick="seedDemo(true)">Load Demo Data</button><button class="btn" onclick="exportData()">Export JSON</button><button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="security-banner"><span>🔒</span><div><strong>Demo Environment for Security Purposes.</strong> This prototype uses browser-local storage and front-end authentication only. Do not enter real student, counselling, financial, or other confidential institutional data into this demo.</div></div>
+
+    <section class="content">
+      <!-- DASHBOARD -->
+      <div class="view active" id="view-dashboard">
+        <div class="page-head"><div><h2>Executive Command Center</h2><p>Institutional-level visibility across the learner journey: Attract → Enroll → Support → Retain → Graduate → Employ → Connect → Partner → Improve.</p></div><div class="actions"><button class="btn gold" onclick="openModal('ticketModal')">+ Create Case Ticket</button><button class="btn primary" onclick="openModal('studentModal')">+ Add Student</button></div></div>
+        <div class="grid kpis" id="kpiGrid"></div>
+        <div class="grid dashboard-grid">
+          <div class="card"><div class="card-head"><div><h3>Enrollment Funnel</h3><small>Virtual live records</small></div><span class="tag gold">2026</span></div><div class="card-body"><div class="funnel" id="funnel"></div></div></div>
+          <div class="card"><div class="card-head"><div><h3>Items Requiring Leadership Attention</h3><small>Management by exception</small></div><span class="tag red" id="criticalCount">0 critical</span></div><div class="card-body"><div class="alerts" id="leadershipAlerts"></div></div></div>
+        </div>
+        <div class="grid dashboard-grid" style="margin-top:16px">
+          <div class="card"><div class="card-head"><h3>Recent Student Activity</h3><button class="btn" onclick="navigate('students')">View all</button></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Program</th><th>Status</th><th>Last Activity</th><th>Case</th></tr></thead><tbody id="recentStudents"></tbody></table></div></div>
+          <div class="card"><div class="card-head"><h3>Ticket Status</h3><small>Service recovery</small></div><div class="card-body" id="ticketStatus"></div></div>
+        </div>
+      </div>
+
+      <!-- STUDENTS -->
+      <div class="view" id="view-students">
+        <div class="page-head"><div><h2>Student 360°</h2><p>One student, one journey, one institutional record, with role-based supporting-office context.</p></div><div class="actions"><button class="btn" onclick="exportStudentsCSV()">Export CSV</button><button class="btn gold" onclick="openModal('studentModal')">+ Add Student</button></div></div>
+        <div class="card"><div class="card-body"><div class="toolbar"><input class="input small" id="studentSearch" placeholder="Search name, ID, program..." oninput="renderStudents()"><select id="studentStatusFilter" onchange="renderStudents()"><option value="">All status</option><option>Prospect</option><option>Applicant</option><option>Enrolled</option><option>Active</option><option>Graduating</option><option>Alumni</option></select><select id="studentTypeFilter" onchange="renderStudents()"><option value="">All student types</option><option>Freshman</option><option>Transferee</option><option>Returning</option><option>Shifter</option><option>Graduate</option></select></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Student</th><th>Program</th><th>Type</th><th>Status</th><th>Enrollment</th><th>Cases</th><th></th></tr></thead><tbody id="studentsTable"></tbody></table></div></div></div>
+      </div>
+
+      <!-- TICKETS -->
+      <div class="view" id="view-tickets">
+        <div class="page-head"><div><h2>Tickets & Case Management</h2><p>Receive → Classify → Acknowledge → Refer → Act → Follow-up → Resolve → Verify → Close.</p></div><div class="actions"><button class="btn gold" onclick="openModal('ticketModal')">+ New Ticket</button></div></div>
+        <div class="metric-strip" id="ticketMetrics"></div>
+        <div class="card"><div class="card-body"><div class="toolbar"><input class="input small" id="ticketSearch" placeholder="Search ticket, student, subject..." oninput="renderTickets()"><select id="ticketStatusFilter" onchange="renderTickets()"><option value="">All status</option><option>New</option><option>Acknowledged</option><option>In Progress</option><option>Pending</option><option>Resolved</option><option>Closed</option><option>Escalated</option></select><select id="ticketPriorityFilter" onchange="renderTickets()"><option value="">All priority</option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select><select id="ticketTypeFilter" onchange="renderTickets()"><option value="">All type</option><option>Complaint</option><option>Request</option><option>Suggestion</option><option>Feedback</option><option>Commendation</option><option>Referral</option></select></div><div class="table-wrap"><table><thead><tr><th>Ticket</th><th>Student / Stakeholder</th><th>Type</th><th>Subject</th><th>Office</th><th>Priority</th><th>Status</th><th>SLA</th><th>Updated</th><th></th></tr></thead><tbody id="ticketsTable"></tbody></table></div></div></div>
+      </div>
+
+      <!-- MODULES -->
+      <div class="view" id="view-enrollment">
+        <div class="page-head"><div><h2>Marketing & Enrollment CRM</h2><p>Awareness → Interest → Inquiry → Follow-up → Application → Enrollment.</p></div><div class="actions"><button class="btn gold" onclick="openModal('leadModal')">+ Add Inquiry</button><button class="btn primary" onclick="showToast('Marketing Plan Simulator is available in the planning workspace.')">Open Simulator</button></div></div>
+        <div class="module-banner"><h3>Presales & Enrollment Management</h3><p>Track prospective-student communication, program demand, recruitment sources, conversion, and assigned CRM personnel in one virtual workspace.</p></div>
+        <div class="metric-strip" id="enrollmentMetrics"></div>
+        <div class="grid dashboard-grid"><div class="card"><div class="card-head"><h3>Interested Enrollees</h3><small>Program demand</small></div><div class="table-wrap"><table><thead><tr><th>Lead</th><th>Program</th><th>Source</th><th>Follow-up</th><th>Owner</th><th>Outcome</th></tr></thead><tbody id="leadsTable"></tbody></table></div></div><div class="card"><div class="card-head"><h3>Program Demand</h3><small>Inquiry volume</small></div><div class="card-body" id="programDemand"></div></div></div>
+      </div>
+
+      <div class="view" id="view-guidance">
+        <div class="page-head"><div><h2>Guidance & Wellbeing</h2><p>Confidential case management, appointments, referrals, interventions, and aggregated wellbeing indicators.</p></div><button class="btn gold" onclick="openModal('guidanceModal')">+ Create Guidance Case</button></div>
+        <div class="module-banner"><h3>Student Wellbeing & Guidance Management</h3><p>Detailed counselling records should remain restricted to authorized guidance personnel; leadership views are designed around aggregated and appropriate institutional indicators.</p></div>
+        <div class="metric-strip"><div class="metric"><span>Open Cases</span><b id="guidOpen">0</b></div><div class="metric"><span>Appointments</span><b id="guidAppt">0</b></div><div class="metric"><span>Referrals</span><b id="guidRef">0</b></div><div class="metric"><span>Follow-ups Due</span><b id="guidFollow">0</b></div></div>
+        <div class="card"><div class="card-head"><h3>Guidance Cases</h3><span class="tag blue">Restricted module</span></div><div class="table-wrap"><table><thead><tr><th>Case</th><th>Student</th><th>Category</th><th>Referral</th><th>Status</th><th>Assigned</th><th>Next Action</th></tr></thead><tbody id="guidanceTable"></tbody></table></div></div>
+      </div>
+
+      <div class="view" id="view-feedback">
+        <div class="page-head"><div><h2>Complaints & Feedback</h2><p>Student voice, service recovery, escalation, satisfaction, and root-cause categorization.</p></div><button class="btn gold" onclick="openModal('ticketModal','Complaint')">+ Submit Concern</button></div>
+        <div class="module-banner"><h3>Student Voice & Service Recovery</h3><p>Every concern becomes a traceable case with a case number, accountable office, priority, SLA, follow-up, and resolution record.</p></div>
+        <div class="metric-strip" id="feedbackMetrics"></div>
+        <div class="card"><div class="card-head"><h3>Recent Concerns</h3><small>Root cause + service recovery</small></div><div class="table-wrap"><table><thead><tr><th>Case</th><th>Category</th><th>Root Cause</th><th>Priority</th><th>Office</th><th>Status</th><th>Resolution</th></tr></thead><tbody id="feedbackTable"></tbody></table></div></div>
+      </div>
+
+      <div class="view" id="view-scholarships">
+        <div class="page-head"><div><h2>Scholarships & Discounts</h2><p>Application → Verification → Evaluation → Approval → Awarded → Utilized → Renewed.</p></div><button class="btn gold" onclick="openModal('scholarshipModal')">+ Add Application</button></div>
+        <div class="metric-strip" id="scholarshipMetrics"></div>
+        <div class="card"><div class="card-head"><h3>Scholarship Assistance Records</h3></div><div class="table-wrap"><table><thead><tr><th>Application</th><th>Student</th><th>Category</th><th>Amount/Rate</th><th>Status</th><th>Validity</th><th>Assigned</th></tr></thead><tbody id="scholarshipTable"></tbody></table></div></div>
+      </div>
+
+      <div class="view" id="view-career">
+        <div class="page-head"><div><h2>Career & Alumni</h2><p>Graduate tracer, alumni directory, career opportunities, employment outcomes, and industry-facing recruitment.</p></div><div class="actions"><button class="btn" onclick="openModal('alumniModal')">+ Add Alumni Record</button><button class="btn gold" onclick="openModal('careerModal')">+ Add Opportunity</button></div></div>
+        <div class="metric-strip" id="careerMetrics"></div>
+        <div class="grid dashboard-grid"><div class="card"><div class="card-head"><h3>Recent Alumni / Graduate Tracer</h3></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Program</th><th>Grad Year</th><th>Employment</th><th>Employer</th><th>Location</th></tr></thead><tbody id="alumniTable"></tbody></table></div></div><div class="card"><div class="card-head"><h3>Career Opportunities</h3></div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Employer</th><th>Type</th><th>Location</th><th>Status</th></tr></thead><tbody id="careerTable"></tbody></table></div></div></div>
+      </div>
+
+      <div class="view" id="view-corporate">
+        <div class="page-head"><div><h2>Corporate Affairs</h2><p>Industry Partner 360°: employers, MOA/MOU, internships, recruitment, training, research, and partnership activities.</p></div><button class="btn gold" onclick="openModal('partnerModal')">+ Add Industry Partner</button></div>
+        <div class="metric-strip" id="partnerMetrics"></div>
+        <div class="card"><div class="card-head"><h3>Industry Partners</h3><small>External relations database</small></div><div class="table-wrap"><table><thead><tr><th>Company</th><th>Industry</th><th>Contact</th><th>Partnership</th><th>MOA/MOU</th><th>Opportunities</th><th>Last Activity</th></tr></thead><tbody id="partnerTable"></tbody></table></div></div>
+      </div>
+
+      <div class="view" id="view-analytics">
+        <div class="page-head"><div><h2>Institutional Analytics</h2><p>Data-informed educational leadership across enrollment, student success, student voice, financial assistance, graduate outcomes, and industry engagement.</p></div><button class="btn primary" onclick="showToast('Analytics are simulated from the local virtual database.')">Refresh Indicators</button></div>
+        <div class="grid dashboard-grid"><div class="card"><div class="card-head"><h3>Inquiry-to-Enrollment Trend</h3><small>Virtual six-month view</small></div><div class="card-body"><div class="chart" id="trendChart"></div></div></div><div class="card"><div class="card-head"><h3>Institutional Lifecycle</h3></div><div class="card-body" id="lifecycle"></div></div></div>
+        <div class="grid dashboard-grid" style="margin-top:16px"><div class="card"><div class="card-head"><h3>Management by Exception</h3></div><div class="card-body" id="exceptionPanel"></div></div><div class="card"><div class="card-head"><h3>PLAN → IMPLEMENT → MONITOR → EVALUATE → IMPROVE</h3></div><div class="card-body" id="pdcaPanel"></div></div></div>
+      </div>
+
+      <div class="view" id="view-admin">
+        <div class="page-head"><div><h2>Administration</h2><p>Virtual user roles, permissions, workflow, forms, audit-oriented activity, and local database controls.</p></div><button class="btn danger" onclick="resetData()">Reset Virtual Database</button></div>
+        <div class="grid dashboard-grid"><div class="card"><div class="card-head"><h3>Role & Permission Matrix</h3></div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Student View</th><th>Case Management</th><th>Guidance Detail</th><th>Executive Analytics</th></tr></thead><tbody><tr><td>President</td><td><span class="tag green">Yes</span></td><td><span class="tag green">Yes</span></td><td><span class="tag gray">Aggregate</span></td><td><span class="tag green">Yes</span></td></tr><tr><td>CRM Head</td><td><span class="tag green">Yes</span></td><td><span class="tag green">Yes</span></td><td><span class="tag gray">Referral Only</span></td><td><span class="tag green">Yes</span></td></tr><tr><td>Guidance</td><td><span class="tag green">Authorized</span></td><td><span class="tag green">Assigned</span></td><td><span class="tag green">Full</span></td><td><span class="tag gray">Aggregate</span></td></tr><tr><td>Finance / Scholarship</td><td><span class="tag green">Authorized</span></td><td><span class="tag gold">Related</span></td><td><span class="tag gray">No</span></td><td><span class="tag green">Aggregate</span></td></tr></tbody></table></div></div><div class="card"><div class="card-head"><h3>Local Database</h3></div><div class="card-body"><div class="status-row"><div class="status-left"><span class="dot green"></span> Browser storage</div><div class="status-value">Active</div></div><div class="status-row"><div class="status-left"><span class="dot green"></span> Students</div><div class="status-value" id="adminStudents">0</div></div><div class="status-row"><div class="status-left"><span class="dot green"></span> Tickets</div><div class="status-value" id="adminTickets">0</div></div><div class="status-row"><div class="status-left"><span class="dot green"></span> Leads</div><div class="status-value" id="adminLeads">0</div></div><div style="margin-top:14px"><button class="btn" onclick="seedDemo(true)">Re-load Demonstration Records</button></div><div class="login-hint">This prototype is not a production database. For deployment, replace localStorage with a secured backend/API and enforce server-side RBAC, audit logging, encryption, and institutional data-retention rules.</div></div></div></div>
+      </div>
+    </section>
+    <footer class="app-footer">Developed by <br><strong>Mr. Arjay A. Maniego, LPT, MA</strong><br>Head, CRM Office, MVGFC</footer>
+  </main>
+</div>
+
+<!-- MODALS -->
+<div class="modal" id="studentModal"><div class="modal-card"><div class="modal-head"><h3>Add Student / Student 360° Record</h3><button class="x" onclick="closeModal('studentModal')">×</button></div><div class="modal-body"><form id="studentForm" class="form-grid"><div class="field"><label>Student ID</label><input class="input" name="id" required placeholder="e.g. G2026-0015"></div><div class="field"><label>Full Name</label><input class="input" name="name" required placeholder="Student full name"></div><div class="field"><label>Email</label><input class="input" type="email" name="email" placeholder="student@email.com"></div><div class="field"><label>Mobile</label><input class="input" name="mobile" placeholder="09xx xxx xxxx"></div><div class="field"><label>Program</label><select name="program"><option>BS Information Technology</option><option>BS Business Administration</option><option>BS Nursing</option><option>BS Education</option><option>BS Psychology</option><option>BS Hospitality Management</option><option>Other</option></select></div><div class="field"><label>Student Type</label><select name="type"><option>Freshman</option><option>Transferee</option><option>Returning</option><option>Shifter</option><option>Graduate</option></select></div><div class="field"><label>Status</label><select name="status"><option>Prospect</option><option>Applicant</option><option>Enrolled</option><option>Active</option><option>Graduating</option><option>Alumni</option></select></div><div class="field"><label>Enrollment Date</label><input class="input" type="date" name="enrollment"></div><div class="field"><label>Inquiry Source</label><select name="source"><option>Facebook</option><option>Messenger</option><option>Website</option><option>Referral</option><option>School Visit</option><option>Walk-in</option><option>Event</option><option>Other</option></select></div><div class="field"><label>Assigned CRM Personnel</label><input class="input" name="owner" placeholder="Assigned staff"></div><div class="field"><label>Location</label><input class="input" name="location" placeholder="City / Province"></div><div class="field full"><label>Notes</label><textarea name="notes" placeholder="Key journey notes, preferences, follow-up information..."></textarea></div><div class="field full"><label class="toggle"><input type="checkbox" name="privacy" required><span class="switch"></span><span style="font-size:11px;color:var(--muted)">I confirm this is a demonstration/authorized institutional record.</span></label></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('studentModal')">Cancel</button><button class="btn gold" type="submit">Save Student</button></div></form></div></div></div>
+
+<div class="modal" id="ticketModal"><div class="modal-card"><div class="modal-head"><h3>Create Ticket / Institutional Case</h3><button class="x" onclick="closeModal('ticketModal')">×</button></div><div class="modal-body"><form id="ticketForm" class="form-grid"><div class="field"><label>Student / Stakeholder ID</label><input class="input" name="studentId" required placeholder="e.g. G2026-0001"></div><div class="field"><label>Case Type</label><select name="type" id="ticketTypeForm"><option>Complaint</option><option>Request</option><option>Suggestion</option><option>Feedback</option><option>Commendation</option><option>Referral</option></select></div><div class="field full"><label>Subject</label><input class="input" name="subject" required placeholder="Short case subject"></div><div class="field"><label>Assigned Office</label><select name="office"><option>CRM Office</option><option>Student Affairs</option><option>Guidance Office</option><option>Registrar</option><option>Finance</option><option>Academic Department</option><option>Marketing</option><option>Quality Assurance</option><option>Corporate Affairs</option></select></div><div class="field"><label>Priority</label><select name="priority"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div><div class="field"><label>Source</label><select name="source"><option>Portal</option><option>Messenger</option><option>Email</option><option>Walk-in</option><option>Phone</option><option>Referral</option></select></div><div class="field"><label>SLA (hours)</label><input class="input" type="number" min="1" name="sla" value="24"></div><div class="field full"><label>Description</label><textarea name="description" required placeholder="Describe the concern, request, suggestion, or feedback..."></textarea></div><div class="field"><label>Root Cause</label><select name="rootCause"><option>Process</option><option>People</option><option>Policy</option><option>Facilities</option><option>Communication</option><option>Technology</option><option>Finance</option><option>Academic Services</option><option>Student Services</option><option>To be determined</option></select></div><div class="field"><label>Assigned Personnel</label><input class="input" name="assignee" placeholder="Staff / office owner"></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('ticketModal')">Cancel</button><button class="btn gold" type="submit">Create Case Ticket</button></div></form></div></div></div>
+
+<div class="modal" id="leadModal"><div class="modal-card"><div class="modal-head"><h3>Add Enrollment Inquiry</h3><button class="x" onclick="closeModal('leadModal')">×</button></div><div class="modal-body"><form id="leadForm" class="form-grid"><div class="field"><label>Lead Name</label><input class="input" name="name" required></div><div class="field"><label>Contact</label><input class="input" name="contact"></div><div class="field"><label>Program</label><select name="program"><option>BS Information Technology</option><option>BS Business Administration</option><option>BS Nursing</option><option>BS Education</option><option>BS Psychology</option><option>BS Hospitality Management</option></select></div><div class="field"><label>Source</label><select name="source"><option>Facebook</option><option>Messenger</option><option>Website</option><option>Referral</option><option>School Visit</option><option>Walk-in</option><option>Event</option></select></div><div class="field"><label>Follow-up</label><select name="followup"><option>New</option><option>Contacted</option><option>For Follow-up</option><option>Application Started</option><option>Enrolled</option><option>Not Proceeding</option><option>No Response</option></select></div><div class="field"><label>Owner</label><input class="input" name="owner"></div><div class="field full"><label>Notes</label><textarea name="notes"></textarea></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('leadModal')">Cancel</button><button class="btn gold" type="submit">Save Inquiry</button></div></form></div></div></div>
+
+<div class="modal" id="guidanceModal"><div class="modal-card"><div class="modal-head"><h3>Create Guidance Case</h3><button class="x" onclick="closeModal('guidanceModal')">×</button></div><div class="modal-body"><form id="guidanceForm" class="form-grid"><div class="field"><label>Student ID</label><input class="input" name="studentId" required></div><div class="field"><label>Category</label><select name="category"><option>Academic concerns</option><option>Personal concerns</option><option>Family concerns</option><option>Adjustment concerns</option><option>Career concerns</option><option>Behavioral concerns</option><option>Financial concerns</option><option>Relationship concerns</option><option>Student wellbeing concerns</option></select></div><div class="field"><label>Referral</label><select name="referral"><option>Guidance Office</option><option>Dean</option><option>Program Chair</option><option>Student Affairs</option><option>Medical Services</option><option>External Provider</option></select></div><div class="field"><label>Status</label><select name="status"><option>Open</option><option>In Progress</option><option>Follow-up</option><option>Closed</option></select></div><div class="field"><label>Assigned Guidance Personnel</label><input class="input" name="assigned"></div><div class="field"><label>Next Action</label><input class="input" name="nextAction" placeholder="Follow-up / appointment date"></div><div class="field full"><label>Authorized Case Note</label><textarea name="note"></textarea></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('guidanceModal')">Cancel</button><button class="btn gold" type="submit">Save Guidance Case</button></div></form></div></div></div>
+
+<div class="modal" id="scholarshipModal"><div class="modal-card"><div class="modal-head"><h3>Add Scholarship / Discount Application</h3><button class="x" onclick="closeModal('scholarshipModal')">×</button></div><div class="modal-body"><form id="scholarshipForm" class="form-grid"><div class="field"><label>Student ID</label><input class="input" name="studentId" required></div><div class="field"><label>Category</label><select name="category"><option>Academic Scholarship</option><option>Alagang Gallegan</option><option>Entrance Scholarship</option><option>Need-Based Assistance</option><option>Discount</option><option>Other</option></select></div><div class="field"><label>Amount / Rate</label><input class="input" name="amount" placeholder="e.g. 50% or ₱10,000"></div><div class="field"><label>Status</label><select name="status"><option>Submitted</option><option>Under Verification</option><option>Qualified</option><option>Approved</option><option>Awarded</option><option>Renewal</option><option>Rejected</option></select></div><div class="field"><label>Validity</label><input class="input" name="validity" placeholder="AY 2026–2027"></div><div class="field"><label>Assigned Officer</label><input class="input" name="assigned"></div><div class="field full"><label>Notes</label><textarea name="notes"></textarea></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('scholarshipModal')">Cancel</button><button class="btn gold" type="submit">Save Application</button></div></form></div></div></div>
+
+<div class="modal" id="alumniModal"><div class="modal-card"><div class="modal-head"><h3>Add Graduate Tracer / Alumni Record</h3><button class="x" onclick="closeModal('alumniModal')">×</button></div><div class="modal-body"><form id="alumniForm" class="form-grid"><div class="field"><label>Name</label><input class="input" name="name" required></div><div class="field"><label>Program</label><input class="input" name="program"></div><div class="field"><label>Graduation Year</label><input class="input" type="number" name="year" value="2026"></div><div class="field"><label>Employment Status</label><select name="employment"><option>Employed</option><option>Self-employed</option><option>Entrepreneur</option><option>Further Studies</option><option>Seeking Employment</option><option>Overseas Employment</option></select></div><div class="field"><label>Employer</label><input class="input" name="employer"></div><div class="field"><label>Location</label><input class="input" name="location"></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('alumniModal')">Cancel</button><button class="btn gold" type="submit">Save Alumni Record</button></div></form></div></div></div>
+
+<div class="modal" id="careerModal"><div class="modal-card"><div class="modal-head"><h3>Add Career Opportunity</h3><button class="x" onclick="closeModal('careerModal')">×</button></div><div class="modal-body"><form id="careerForm" class="form-grid"><div class="field"><label>Position / Opportunity</label><input class="input" name="role" required></div><div class="field"><label>Employer</label><input class="input" name="employer" required></div><div class="field"><label>Type</label><select name="type"><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Apprenticeship</option><option>Training</option></select></div><div class="field"><label>Location</label><input class="input" name="location"></div><div class="field"><label>Status</label><select name="status"><option>Open</option><option>Closing Soon</option><option>Closed</option></select></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('careerModal')">Cancel</button><button class="btn gold" type="submit">Save Opportunity</button></div></form></div></div></div>
+
+<div class="modal" id="partnerModal"><div class="modal-card"><div class="modal-head"><h3>Add Industry Partner</h3><button class="x" onclick="closeModal('partnerModal')">×</button></div><div class="modal-body"><form id="partnerForm" class="form-grid"><div class="field"><label>Company</label><input class="input" name="company" required></div><div class="field"><label>Industry</label><input class="input" name="industry"></div><div class="field"><label>Contact Person</label><input class="input" name="contact"></div><div class="field"><label>Partnership Status</label><select name="partnership"><option>Prospective</option><option>Active</option><option>Renewal</option><option>Inactive</option></select></div><div class="field"><label>MOA/MOU</label><select name="agreement"><option>None</option><option>For Review</option><option>Active</option><option>Expired</option></select></div><div class="field"><label>Opportunities</label><input class="input" name="opportunities" placeholder="Internship / Job / Research"></div><div class="field full"><label>Last Activity</label><input class="input" name="lastActivity"></div><div class="form-footer field full"><button type="button" class="btn" onclick="closeModal('partnerModal')">Cancel</button><button class="btn gold" type="submit">Save Partner</button></div></form></div></div></div>
+
+<div class="modal" id="profileModal"><div class="modal-card"><div class="modal-head"><h3 id="profileModalTitle">Student 360°</h3><button class="x" onclick="closeModal('profileModal')">×</button></div><div class="modal-body" id="profileModalBody"></div></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const AUTH_KEY='galleganCaresAuth_v1';
+const USERS={president:{password:'admin',name:'President',role:'President / Authorized Administrator'}};
+function getAuth(){try{return JSON.parse(sessionStorage.getItem(AUTH_KEY))||null}catch(e){return null}}
+function setAuth(user){sessionStorage.setItem(AUTH_KEY,JSON.stringify(user))}
+function clearAuth(){sessionStorage.removeItem(AUTH_KEY)}
+function applyAuth(){const auth=getAuth();const screen=document.getElementById('loginScreen');const app=document.getElementById('portalApp');if(auth){screen.classList.add('hidden');app.style.display='flex';document.getElementById('sessionRole').textContent=auth.role||'Authorized User';}else{screen.classList.remove('hidden');app.style.display='none';setTimeout(()=>document.getElementById('loginUsername')?.focus(),80)}}
+function logout(){clearAuth();applyAuth();document.getElementById('loginPassword').value='';document.getElementById('loginError').textContent=''}
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());const user=USERS[String(f.username||'').trim().toLowerCase()];if(user && f.password===user.password){setAuth({username:String(f.username).trim().toLowerCase(),name:user.name,role:user.role,loginAt:now()});document.getElementById('loginError').textContent='';applyAuth();toast('Welcome, '+user.name+'.');}else{document.getElementById('loginError').textContent='Invalid username or password.';document.getElementById('loginPassword').value='';document.getElementById('loginPassword').focus()}});
+applyAuth();
+
+const STORAGE_KEY='galleganCaresDB_v1';
+const now=()=>new Date().toISOString();
+function baseDB(){return {students:[],tickets:[],leads:[],guidance:[],scholarships:[],alumni:[],careers:[],partners:[],events:[]}}
+function uid(prefix='ID'){return prefix+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
+function getDB(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||baseDB()}catch(e){return baseDB()}}
+function saveDB(db){localStorage.setItem(STORAGE_KEY,JSON.stringify(db))}
+let db=getDB();
+function esc(v){return String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+function fmtDate(v){if(!v)return '—';const d=new Date(v);return isNaN(d)?v:d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})}
+function fmtTime(v){if(!v)return '—';const d=new Date(v);return isNaN(d)?v:d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
+function badge(value){const v=String(value||'');let cls='gray';if(['Active','Enrolled','Resolved','Closed','Approved','Awarded','Open','Employed'].includes(v))cls='green'; if(['Critical','Escalated','Rejected','Overdue'].includes(v))cls='red'; if(['Pending','In Progress','Acknowledged','Under Verification','Qualified','Follow-up','For Follow-up','Closing Soon'].includes(v))cls='gold'; if(['Alumni','Further Studies','Referral'].includes(v))cls='blue'; return `<span class="tag ${cls}">${esc(v)}</span>`}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),2200)}
+function showToast(msg){toast(msg)}
+function openModal(id, prefillType){document.getElementById(id).classList.add('show'); if(id==='ticketModal'&&prefillType){document.getElementById('ticketTypeForm').value=prefillType}}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function logEvent(type, text){db.events.unshift({id:uid('EVT'),type,text,created:now()});db.events=db.events.slice(0,80);saveDB(db)}
+function navigate(view){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const target=document.getElementById('view-'+view);if(target)target.classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));const map={dashboard:'Dashboard',students:'Student 360°',tickets:'Tickets & Cases',enrollment:'Marketing & Enrollment',guidance:'Guidance & Wellbeing',feedback:'Complaints & Feedback',scholarships:'Scholarships & Discounts',career:'Career & Alumni',corporate:'Corporate Affairs',analytics:'Institutional Analytics',admin:'Administration'};document.getElementById('breadcrumb').textContent='Gallegan Cares / '+(map[view]||view);if(window.innerWidth<821)document.getElementById('sidebar').classList.remove('open');renderAll()}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.view)));
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
+
+function seedDemo(force=false){
+  if(!force && (db.students.length||db.tickets.length||db.leads.length))return;
+  const students=[
+    {id:'G2026-0001',name:'Maria Angelica Santos',email:'maria.santos@example.edu',mobile:'09171234567',program:'BS Information Technology',type:'Freshman',status:'Active',enrollment:'2026-08-05',source:'Facebook',owner:'CRM Team',location:'Cabanatuan City',notes:'Interested in EdTech and app development.',created:now()},
+    {id:'G2026-0002',name:'Joshua Miguel Reyes',email:'joshua.reyes@example.edu',mobile:'09189876543',program:'BS Business Administration',type:'Transferee',status:'Enrolled',enrollment:'2026-08-07',source:'Referral',owner:'CRM Team',location:'Gapan City',notes:'Scholarship inquiry completed.',created:now()},
+    {id:'G2026-0003',name:'Sofia Mae Dela Cruz',email:'sofia.dc@example.edu',mobile:'09221234567',program:'BS Nursing',type:'Freshman',status:'Active',enrollment:'2026-08-06',source:'School Visit',owner:'CRM Team',location:'Palayan City',notes:'Guidance follow-up scheduled.',created:now()},
+    {id:'G2026-0004',name:'Daniel Paolo Mendoza',email:'daniel.m@example.edu',mobile:'09194561234',program:'BS Education',type:'Returning',status:'Active',enrollment:'2026-08-02',source:'Website',owner:'CRM Team',location:'Science City of Muñoz',notes:'Academic concern referred to dean.',created:now()},
+    {id:'G2025-0142',name:'Andrea Nicole Garcia',email:'andrea.g@example.edu',mobile:'09351230001',program:'BS Psychology',type:'Graduate',status:'Alumni',enrollment:'2025-08-03',source:'Referral',owner:'Alumni Office',location:'Gapan City',notes:'Now employed in HR.',created:now()}
+  ];
+  const leads=[
+    {id:'L-26001',name:'Carlo Reyes',program:'BS Information Technology',source:'Messenger',followup:'For Follow-up',owner:'CRM Team',outcome:'Interested',notes:''},
+    {id:'L-26002',name:'Mika Flores',program:'BS Nursing',source:'School Visit',followup:'Application Started',owner:'CRM Team',outcome:'Application Started',notes:''},
+    {id:'L-26003',name:'John Mark Villanueva',program:'BS Business Administration',source:'Facebook',followup:'Contacted',owner:'CRM Team',outcome:'Interested',notes:''},
+    {id:'L-26004',name:'Lea Manalo',program:'BS Education',source:'Website',followup:'No Response',owner:'CRM Team',outcome:'No Response',notes:''}
+  ];
+  const tickets=[
+    {id:'GCP-2026-000125',studentId:'G2026-0001',type:'Request',subject:'Certificate request follow-up',office:'Registrar',priority:'Medium',status:'In Progress',source:'Portal',sla:24,created:now(),updated:now(),rootCause:'Process',assignee:'Registrar Staff',description:'Request for status update on document release.',resolution:''},
+    {id:'GCP-2026-000126',studentId:'G2026-0003',type:'Complaint',subject:'Class schedule concern',office:'Academic Department',priority:'High',status:'Acknowledged',source:'Portal',sla:12,created:new Date(Date.now()-26*3600000).toISOString(),updated:now(),rootCause:'Communication',assignee:'Program Chair',description:'Concern about overlapping sections.',resolution:''},
+    {id:'GCP-2026-000127',studentId:'G2026-0004',type:'Feedback',subject:'Helpful student service experience',office:'CRM Office',priority:'Low',status:'Closed',source:'Portal',sla:48,created:new Date(Date.now()-72*3600000).toISOString(),updated:now(),rootCause:'People',assignee:'CRM Team',description:'Positive feedback on assistance.',resolution:'Thanked student and recorded as service commendation.'},
+    {id:'GCP-2026-000128',studentId:'G2026-0002',type:'Complaint',subject:'Scholarship verification delay',office:'Student Affairs',priority:'Critical',status:'Escalated',source:'Portal',sla:8,created:new Date(Date.now()-20*3600000).toISOString(),updated:now(),rootCause:'Process',assignee:'Scholarship Officer',description:'Scholarship verification requires leadership attention.',resolution:''}
+  ];
+  const guidance=[
+    {id:'GCG-26001',studentId:'G2026-0003',category:'Adjustment concerns',referral:'Guidance Office',status:'Follow-up',assigned:'Guidance Counselor',nextAction:'Follow-up: Oct 02, 2026',note:'Authorized case record.'},
+    {id:'GCG-26002',studentId:'G2026-0004',category:'Academic concerns',referral:'Dean',status:'In Progress',assigned:'Guidance Counselor',nextAction:'Faculty coordination',note:'Authorized case record.'}
+  ];
+  const scholarships=[
+    {id:'SCH-26001',studentId:'G2026-0002',category:'Alagang Gallegan',amount:'50%',status:'Approved',validity:'AY 2026–2027',assigned:'Scholarship Office',notes:''},
+    {id:'SCH-26002',studentId:'G2026-0004',category:'Need-Based Assistance',amount:'₱15,000',status:'Under Verification',validity:'AY 2026–2027',assigned:'Scholarship Office',notes:''},
+    {id:'SCH-26003',studentId:'G2026-0001',category:'Academic Scholarship',amount:'25%',status:'Awarded',validity:'AY 2026–2027',assigned:'Scholarship Office',notes:''}
+  ];
+  const alumni=[{name:'Andrea Nicole Garcia',program:'BS Psychology',year:2025,employment:'Employed',employer:'Nexus People Services',location:'Quezon City'},{name:'Mark Anthony Ramos',program:'BS Information Technology',year:2024,employment:'Self-employed',employer:'Independent Tech Services',location:'Nueva Ecija'}];
+  const careers=[{role:'Junior Web Developer',employer:'TechLink Solutions',type:'Full-time',location:'Cabanatuan / Hybrid',status:'Open'},{role:'HR Operations Assistant',employer:'Nexus People Services',type:'Full-time',location:'Quezon City',status:'Open'},{role:'IT Support Intern',employer:'Digital Nueva Ecija',type:'Internship',location:'Cabanatuan City',status:'Closing Soon'}];
+  const partners=[{company:'TechLink Solutions',industry:'Information Technology',contact:'Patricia Ramos',partnership:'Active',agreement:'Active',opportunities:'Internship / Jobs',lastActivity:'Industry consultation — Sep 2026'},{company:'Nexus People Services',industry:'BPO / HR',contact:'Kevin Villareal',partnership:'Renewal',agreement:'Active',opportunities:'Recruitment / Internship',lastActivity:'Graduate hiring forum — Aug 2026'},{company:'Nueva Ecija Medical Center',industry:'Healthcare',contact:'A. Cruz',partnership:'Active',agreement:'For Review',opportunities:'Clinical exposure / Training',lastActivity:'Partner meeting — Sep 2026'}];
+  db={students,tickets,leads,guidance,scholarships,alumni,careers,partners,events:[]};
+  saveDB(db);logEvent('SYSTEM','Demonstration database loaded.');renderAll();toast('Demo data loaded into the virtual database.');
+}
+
+function renderDashboard(){
+ const active=db.students.filter(s=>['Enrolled','Active','Graduating'].includes(s.status)).length;
+ const open=db.tickets.filter(t=>!['Resolved','Closed'].includes(t.status)).length;
+ const high=db.tickets.filter(t=>['High','Critical'].includes(t.priority)&&!['Resolved','Closed'].includes(t.status)).length;
+ const scholars=db.scholarships.filter(s=>['Approved','Awarded','Renewal'].includes(s.status)).length;
+ const employed=db.alumni.filter(a=>['Employed','Self-employed','Entrepreneur','Overseas Employment'].includes(a.employment)).length;
+ const partners=db.partners.filter(p=>p.partnership==='Active').length;
+ document.getElementById('kpiGrid').innerHTML=[
+  ['Students / Learners',db.students.length,'All virtual student records'],['Active / Enrolled',active,'Current journey population'],['Open Cases',open,'Across institutional offices'],['Priority Cases',high,'High + Critical active cases'],['Scholarship Awards',scholars,'Approved / Awarded / Renewal'],['Active Industry Partners',partners,'External relations']
+ ].map(x=>`<div class="card kpi"><div class="label">${x[0]}</div><div class="num">${x[1]}</div><div class="meta">${x[2]}</div></div>`).join('');
+ const stages=[['Leads',db.leads.length||1],['Inquiries',db.leads.length||1],['Applications',db.leads.filter(l=>['Application Started','Enrolled'].includes(l.followup)).length||1],['Enrolled',db.students.filter(s=>['Enrolled','Active'].includes(s.status)).length||1],['Retained',db.students.filter(s=>s.status==='Active').length||1],['Alumni',db.alumni.length||1]];
+ const max=Math.max(...stages.map(s=>s[1])); document.getElementById('funnel').innerHTML=stages.map(s=>`<div><div class="funnel-bar" style="height:${40+(s[1]/max)*120}px"><span>${s[0]}</span><strong>${s[1]}</strong></div><div class="funnel-label">${s[0]}</div></div>`).join('');
+ const critical=db.tickets.filter(t=>['Critical','High'].includes(t.priority)&&!['Resolved','Closed'].includes(t.status));
+ document.getElementById('criticalCount').textContent=critical.length+' critical/high';
+ const alerts=[];
+ critical.slice(0,3).forEach(t=>alerts.push(`<div class="alert ${t.priority==='Critical'?'red':'amber'}"><strong>${esc(t.id)} — ${esc(t.subject)}</strong><p>${esc(t.priority)} priority • ${esc(t.office)} • ${esc(t.status)}</p></div>`));
+ const overdue=db.tickets.filter(t=>isOverdue(t)); if(overdue.length)alerts.push(`<div class="alert red"><strong>${overdue.length} ticket(s) beyond SLA</strong><p>Review cases in Tickets & Cases.</p></div>`);
+ if(!alerts.length)alerts.push('<div class="alert green"><strong>No immediate exception flagged</strong><p>Institutional operations are within this prototype\'s monitoring thresholds.</p></div>');
+ document.getElementById('leadershipAlerts').innerHTML=alerts.join('');
+ document.getElementById('recentStudents').innerHTML=db.students.slice(0,6).map(s=>{const cases=db.tickets.filter(t=>t.studentId===s.id&&!['Resolved','Closed'].includes(t.status)).length;return `<tr><td><b>${esc(s.name)}</b><br><span style="font-size:9px;color:var(--muted)">${esc(s.id)}</span></td><td>${esc(s.program)}</td><td>${badge(s.status)}</td><td>${fmtDate(s.enrollment)}</td><td>${cases?badge(cases+' open'):'<span class="tag gray">None</span>'}</td></tr>`}).join('')||`<tr><td colspan="5"><div class="empty">No student records yet.</div></td></tr>`;
+ const counts={New:0,Acknowledged:0,'In Progress':0,Pending:0,Resolved:0,Closed:0,Escalated:0};db.tickets.forEach(t=>counts[t.status]=(counts[t.status]||0)+1);document.getElementById('ticketStatus').innerHTML=Object.entries(counts).map(([k,v])=>`<div class="status-row"><div class="status-left"><span class="dot ${['Resolved','Closed'].includes(k)?'green':['Escalated'].includes(k)?'red':'amber'}"></span>${k}</div><div class="status-value">${v}</div></div>`).join('');
+}
+function isOverdue(t){if(['Resolved','Closed'].includes(t.status))return false;const created=new Date(t.created).getTime();return Date.now()-created > (Number(t.sla||24)*3600000)}
+function renderStudents(){
+ const q=(document.getElementById('studentSearch')?.value||'').toLowerCase(), sf=document.getElementById('studentStatusFilter')?.value||'', tf=document.getElementById('studentTypeFilter')?.value||'';
+ const rows=db.students.filter(s=>{const hay=[s.id,s.name,s.program,s.location].join(' ').toLowerCase();return (!q||hay.includes(q))&&(!sf||s.status===sf)&&(!tf||s.type===tf)});
+ document.getElementById('studentsTable').innerHTML=rows.map(s=>`<tr><td><b>${esc(s.id)}</b></td><td><b>${esc(s.name)}</b><br><span style="font-size:9px;color:var(--muted)">${esc(s.email||'')}</span></td><td>${esc(s.program)}</td><td>${badge(s.type)}</td><td>${badge(s.status)}</td><td>${fmtDate(s.enrollment)}</td><td>${db.tickets.filter(t=>t.studentId===s.id&&!['Closed','Resolved'].includes(t.status)).length}</td><td><button class="btn" onclick="viewStudent('${esc(s.id)}')">View 360°</button></td></tr>`).join('')||`<tr><td colspan="8"><div class="empty">No matching students.</div></td></tr>`;
+}
+function viewStudent(id){const s=db.students.find(x=>x.id===id);if(!s)return;const cases=db.tickets.filter(t=>t.studentId===id);const g=db.guidance.filter(x=>x.studentId===id);const sch=db.scholarships.filter(x=>x.studentId===id);document.getElementById('profileModalTitle').textContent=s.name+' — Student 360°';document.getElementById('profileModalBody').innerHTML=`<div class="profile"><div class="card profile-side"><div class="avatar">${esc(s.name.split(' ').map(x=>x[0]).slice(0,2).join(''))}</div><h3>${esc(s.name)}</h3><p>${esc(s.id)}</p><p>${esc(s.program)}</p><div class="mini"><div class="tag green">${esc(s.status)}</div><p style="margin-top:8px">${esc(s.location||'Location not recorded')}</p><p>${esc(s.email||'No email')}</p><p>${esc(s.mobile||'No mobile')}</p></div></div><div class="profile-main"><div class="card"><div class="card-head"><h3>Identity & Enrollment</h3></div><div class="card-body"><div class="info-grid"><div class="info-item"><b>Student Type</b><span>${esc(s.type)}</span></div><div class="info-item"><b>Enrollment</b><span>${fmtDate(s.enrollment)}</span></div><div class="info-item"><b>Inquiry Source</b><span>${esc(s.source||'—')}</span></div><div class="info-item"><b>Assigned CRM</b><span>${esc(s.owner||'—')}</span></div><div class="info-item"><b>Open Cases</b><span>${cases.filter(t=>!['Closed','Resolved'].includes(t.status)).length}</span></div><div class="info-item"><b>Scholarship Records</b><span>${sch.length}</span></div></div></div></div><div class="card"><div class="card-head"><h3>Service & Case History</h3><button class="btn" onclick="closeModal('profileModal');openModal('ticketModal');document.querySelector('#ticketForm [name=studentId]').value='${esc(s.id)}'">+ Ticket</button></div><div class="card-body"><div class="timeline">${cases.map(t=>`<div class="event"><strong>${esc(t.id)} • ${esc(t.subject)} ${badge(t.status)}</strong><p>${fmtTime(t.updated)} • ${esc(t.office)} • ${esc(t.priority)}</p></div>`).join('')||'<div class="empty">No ticket history.</div>'}</div></div></div><div class="card"><div class="card-head"><h3>Support & Financial Assistance</h3></div><div class="card-body"><div class="info-grid"><div class="info-item"><b>Guidance Cases</b><span>${g.length}</span></div><div class="info-item"><b>Scholarships</b><span>${sch.length}</span></div><div class="info-item"><b>Notes</b><span>${esc(s.notes||'—')}</span></div></div></div></div></div></div>`;openModal('profileModal')}
+function renderTickets(){
+ const q=(document.getElementById('ticketSearch')?.value||'').toLowerCase(), sf=document.getElementById('ticketStatusFilter')?.value||'', pf=document.getElementById('ticketPriorityFilter')?.value||'', tf=document.getElementById('ticketTypeFilter')?.value||'';
+ const rows=db.tickets.filter(t=>{const student=db.students.find(s=>s.id===t.studentId);const hay=[t.id,t.subject,t.studentId,student?.name||'',t.office,t.assignee].join(' ').toLowerCase();return (!q||hay.includes(q))&&(!sf||t.status===sf)&&(!pf||t.priority===pf)&&(!tf||t.type===tf)});
+ document.getElementById('ticketsTable').innerHTML=rows.map(t=>{const overdue=isOverdue(t);const st=['Resolved','Closed'].includes(t.status)?'green':overdue?'red':'gold';return `<tr><td><b>${esc(t.id)}</b></td><td><b>${esc(db.students.find(s=>s.id===t.studentId)?.name||t.studentId)}</b><br><span style="font-size:9px;color:var(--muted)">${esc(t.studentId)}</span></td><td>${badge(t.type)}</td><td>${esc(t.subject)}</td><td>${esc(t.office)}</td><td>${badge(t.priority)}</td><td>${badge(t.status)}</td><td><span class="tag ${st}">${overdue?'Overdue':'Within SLA'}</span></td><td>${fmtTime(t.updated)}</td><td><button class="btn" onclick="advanceTicket('${esc(t.id)}')">Advance</button> <button class="btn" onclick="ticketDetail('${esc(t.id)}')">View</button></td></tr>`}).join('')||`<tr><td colspan="10"><div class="empty">No matching cases.</div></td></tr>`;
+ const open=db.tickets.filter(t=>!['Resolved','Closed'].includes(t.status)).length, resolved=db.tickets.filter(t=>t.status==='Resolved').length, escalated=db.tickets.filter(t=>t.status==='Escalated').length, overdue=db.tickets.filter(isOverdue).length;document.getElementById('ticketMetrics').innerHTML=[['Open',open],['Resolved',resolved],['Escalated',escalated],['Overdue SLA',overdue]].map(x=>`<div class="metric"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');
+}
+function ticketDetail(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;const s=db.students.find(x=>x.id===t.studentId);alert(`${t.id}\n\nStudent: ${s?.name||t.studentId}\nSubject: ${t.subject}\nType: ${t.type}\nPriority: ${t.priority}\nStatus: ${t.status}\nOffice: ${t.office}\nAssignee: ${t.assignee||'—'}\nRoot Cause: ${t.rootCause||'—'}\n\nDescription:\n${t.description||'—'}\n\nResolution:\n${t.resolution||'Not yet recorded.'}`)}
+function advanceTicket(id){const t=db.tickets.find(x=>x.id===id);if(!t)return;const order=['New','Acknowledged','In Progress','Pending','Resolved','Closed'];if(t.status==='Escalated')t.status='In Progress';else{const idx=order.indexOf(t.status);t.status=order[Math.min(idx+1,order.length-1)]}t.updated=now();if(t.status==='Resolved')t.resolution=t.resolution||'Resolved through institutional case workflow.';saveDB(db);logEvent('TICKET',`Updated ${t.id} to ${t.status}`);renderAll();toast(`${t.id} advanced to ${t.status}.`)}
+
+function renderEnrollment(){const interested=db.leads.length;const apps=db.leads.filter(l=>['Application Started','Enrolled'].includes(l.followup)).length;const enrolled=db.leads.filter(l=>l.followup==='Enrolled').length+db.students.filter(s=>['Enrolled','Active'].includes(s.status)).length;const conversion=interested?Math.round((enrolled/Math.max(1,interested+db.students.length))*100):0;document.getElementById('enrollmentMetrics').innerHTML=[['Interested Leads',interested],['Applications Started',apps],['Enrolled / Active',enrolled],['Indicative Conversion',conversion+'%']].map(x=>`<div class="metric"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');document.getElementById('leadsTable').innerHTML=db.leads.map(l=>`<tr><td><b>${esc(l.name)}</b><br><span style="font-size:9px;color:var(--muted)">${esc(l.contact||'')}</span></td><td>${esc(l.program)}</td><td>${esc(l.source)}</td><td>${badge(l.followup)}</td><td>${esc(l.owner)}</td><td>${esc(l.outcome)}</td></tr>`).join('')||`<tr><td colspan="6"><div class="empty">No inquiries yet.</div></td></tr>`;const counts={};db.leads.forEach(l=>counts[l.program]=(counts[l.program]||0)+1);document.getElementById('programDemand').innerHTML=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;margin-bottom:5px"><span>${esc(k)}</span><b>${v}</b></div><div class="progress"><span style="width:${Math.round(v/Math.max(...Object.values(counts))*100)}%"></span></div></div>`).join('')||'<div class="empty">No program demand records.</div>'}
+function renderGuidance(){const open=db.guidance.filter(g=>!['Closed'].includes(g.status)).length;document.getElementById('guidOpen').textContent=open;document.getElementById('guidAppt').textContent=db.guidance.length+1;document.getElementById('guidRef').textContent=db.guidance.filter(g=>g.referral).length;document.getElementById('guidFollow').textContent=db.guidance.filter(g=>g.status==='Follow-up').length;document.getElementById('guidanceTable').innerHTML=db.guidance.map(g=>`<tr><td><b>${esc(g.id)}</b></td><td>${esc(db.students.find(s=>s.id===g.studentId)?.name||g.studentId)}</td><td>${esc(g.category)}</td><td>${esc(g.referral)}</td><td>${badge(g.status)}</td><td>${esc(g.assigned)}</td><td>${esc(g.nextAction||'—')}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty">No guidance cases.</div></td></tr>`}
+function renderFeedback(){const open=db.tickets.filter(t=>t.type!=='Referral'&&!['Resolved','Closed'].includes(t.status)).length;const resolved=db.tickets.filter(t=>t.type!=='Referral'&&['Resolved','Closed'].includes(t.status)).length;const overdue=db.tickets.filter(t=>t.type!=='Referral'&&isOverdue(t)).length;document.getElementById('feedbackMetrics').innerHTML=[['Active Concerns',open],['Resolved / Closed',resolved],['Overdue',overdue],['Root-Cause Categories',new Set(db.tickets.map(t=>t.rootCause).filter(Boolean)).size]].map(x=>`<div class="metric"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');document.getElementById('feedbackTable').innerHTML=db.tickets.filter(t=>t.type!=='Referral').slice(0,15).map(t=>`<tr><td><b>${esc(t.id)}</b></td><td>${badge(t.type)}</td><td>${esc(t.rootCause||'—')}</td><td>${badge(t.priority)}</td><td>${esc(t.office)}</td><td>${badge(t.status)}</td><td>${esc(t.resolution||'Pending action')}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty">No concerns recorded.</div></td></tr>`}
+function renderScholarships(){const approved=db.scholarships.filter(s=>['Approved','Awarded','Renewal'].includes(s.status)).length;const pending=db.scholarships.filter(s=>['Submitted','Under Verification','Qualified'].includes(s.status)).length;const awarded=db.scholarships.filter(s=>['Awarded','Renewal'].includes(s.status)).length;document.getElementById('scholarshipMetrics').innerHTML=[['Applications',db.scholarships.length],['Pending',pending],['Approved',approved],['Utilized / Awarded',awarded]].map(x=>`<div class="metric"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');document.getElementById('scholarshipTable').innerHTML=db.scholarships.map(s=>`<tr><td><b>${esc(s.id)}</b></td><td>${esc(db.students.find(x=>x.id===s.studentId)?.name||s.studentId)}</td><td>${esc(s.category)}</td><td>${esc(s.amount)}</td><td>${badge(s.status)}</td><td>${esc(s.validity)}</td><td>${esc(s.assigned)}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty">No scholarship records.</div></td></tr>`}
+function renderCareer(){const employed=db.alumni.filter(a=>['Employed','Self-employed','Entrepreneur','Overseas Employment'].includes(a.employment)).length;document.getElementById('careerMetrics').innerHTML=[['Alumni Tracer Records',db.alumni.length],['Employed / Engaged',employed],['Open Opportunities',db.careers.filter(c=>c.status!=='Closed').length],['Employment Coverage',db.alumni.length?Math.round(employed/db.alumni.length*100)+'%':'0%']].map(x=>`<div class="metric"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');document.getElementById('alumniTable').innerHTML=db.alumni.map(a=>`<tr><td><b>${esc(a.name)}</b></td><td>${esc(a.program)}</td><td>${esc(a.year)}</td><td>${badge(a.employment)}</td><td>${esc(a.employer)}</td><td>${esc(a.location)}</td></tr>`).join('')||`<tr><td colspan="6"><div class="empty">No alumni tracer records.</div></td></tr>`;document.getElementById('careerTable').innerHTML=db.careers.map(c=>`<tr><td><b>${esc(c.role)}</b></td><td>${esc(c.employer)}</td><td>${esc(c.type)}</td><td>${esc(c.location)}</td><td>${badge(c.status)}</td></tr>`).join('')||`<tr><td colspan="5"><div class="empty">No opportunities yet.</div></td></tr>`}
+function renderCorporate(){const active=db.partners.filter(p=>p.partnership==='Active').length;const agreements=db.partners.filter(p=>p.agreement==='Active').length;document.getElementById('partnerMetrics').innerHTML=[['Industry Partners',db.partners.length],['Active Partnerships',active],['Active MOA/MOU',agreements],['Recruitment / Internship Links',db.partners.filter(p=>(p.opportunities||'').length>0).length]].map(x=>`<div class="metric"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');document.getElementById('partnerTable').innerHTML=db.partners.map(p=>`<tr><td><b>${esc(p.company)}</b></td><td>${esc(p.industry)}</td><td>${esc(p.contact)}</td><td>${badge(p.partnership)}</td><td>${badge(p.agreement)}</td><td>${esc(p.opportunities)}</td><td>${esc(p.lastActivity)}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty">No industry partners yet.</div></td></tr>`}
+function renderAnalytics(){const months=['Apr','May','Jun','Jul','Aug','Sep'],vals=[22,35,31,48,58,72];document.getElementById('trendChart').innerHTML=months.map((m,i)=>`<div class="bar-col"><b>${vals[i]}</b><div class="bar" style="height:${25+(vals[i]/72)*115}px"></div><span>${m}</span></div>`).join('');const life=[['Attract',db.leads.length,'Marketing & Presales'],['Enroll',db.students.filter(s=>['Enrolled','Active','Graduating'].includes(s.status)).length,'Admissions / Enrollment'],['Support',db.guidance.length+db.scholarships.length,'Guidance + Scholarships'],['Listen',db.tickets.length,'Complaints + Feedback'],['Graduate',db.alumni.length,'Graduate Tracer'],['Partner',db.partners.length,'Corporate Affairs']];document.getElementById('lifecycle').innerHTML=life.map(x=>`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800"><span>${x[0]}</span><b>${x[1]}</b></div><div style="font-size:9px;color:var(--muted);margin:3px 0 5px">${x[2]}</div><div class="progress"><span style="width:${Math.min(100,20+x[1]*10)}%"></span></div></div>`).join('');document.getElementById('exceptionPanel').innerHTML=[['RED','Critical/high unresolved cases',db.tickets.filter(t=>['Critical','High'].includes(t.priority)&&!['Resolved','Closed'].includes(t.status)).length],['AMBER','Pending / in-progress cases',db.tickets.filter(t=>['Pending','In Progress','Acknowledged'].includes(t.status)).length],['GREEN','Closed / resolved cases',db.tickets.filter(t=>['Closed','Resolved'].includes(t.status)).length]].map(x=>`<div class="status-row"><div class="status-left"><span class="dot ${x[0]==='RED'?'red':x[0]==='AMBER'?'amber':'green'}"></span>${x[1]}</div><div class="status-value">${x[2]}</div></div>`).join('');document.getElementById('pdcaPanel').innerHTML=[['PLAN','Marketing plan, target enrollment, scholarship planning'],['IMPLEMENT','Enrollment, student support, service delivery'],['MONITOR','Executive dashboard, SLA and case queues'],['EVALUATE','Feedback, tracer studies, satisfaction'],['IMPROVE','Root cause, intervention, CQI actions']].map(x=>`<div class="status-row"><div><b style="font-size:11px;color:var(--green-950)">${x[0]}</b><div style="font-size:10px;color:var(--muted);margin-top:2px">${x[1]}</div></div></div>`).join('')}
+function renderAdmin(){document.getElementById('adminStudents').textContent=db.students.length;document.getElementById('adminTickets').textContent=db.tickets.length;document.getElementById('adminLeads').textContent=db.leads.length}
+function renderAll(){renderDashboard();renderStudents();renderTickets();renderEnrollment();renderGuidance();renderFeedback();renderScholarships();renderCareer();renderCorporate();renderAnalytics();renderAdmin()}
+
+// Forms
+function formObj(form){return Object.fromEntries(new FormData(form).entries())}
+document.getElementById('studentForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);if(db.students.some(s=>s.id===f.id)){toast('Student ID already exists.');return}db.students.unshift({...f,created:now()});saveDB(db);logEvent('STUDENT','Added student '+f.id);e.target.reset();closeModal('studentModal');renderAll();toast('Student saved to the virtual database.')});
+document.getElementById('ticketForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);const y=new Date().getFullYear();let n=db.tickets.length+1;let id=`GCP-${y}-${String(n).padStart(6,'0')}`;while(db.tickets.some(t=>t.id===id))id=`GCP-${y}-${String(++n).padStart(6,'0')}`;const t={...f,id,created:now(),updated:now(),status:'New',resolution:''};db.tickets.unshift(t);saveDB(db);logEvent('TICKET','Created '+id+' for '+f.studentId);e.target.reset();e.target.querySelector('[name=sla]').value=24;closeModal('ticketModal');renderAll();toast(`${id} created successfully.`)});
+document.getElementById('leadForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);db.leads.unshift({...f,id:uid('L'),outcome:f.followup});saveDB(db);logEvent('LEAD','Added enrollment inquiry for '+f.name);e.target.reset();closeModal('leadModal');renderAll();toast('Enrollment inquiry saved.')});
+document.getElementById('guidanceForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);db.guidance.unshift({...f,id:uid('GCG')});saveDB(db);logEvent('GUIDANCE','Created guidance case for '+f.studentId);e.target.reset();closeModal('guidanceModal');renderAll();toast('Guidance case saved.')});
+document.getElementById('scholarshipForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);db.scholarships.unshift({...f,id:uid('SCH')});saveDB(db);logEvent('SCHOLARSHIP','Added scholarship record for '+f.studentId);e.target.reset();closeModal('scholarshipModal');renderAll();toast('Scholarship record saved.')});
+document.getElementById('alumniForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);db.alumni.unshift(f);saveDB(db);logEvent('ALUMNI','Added alumni record for '+f.name);e.target.reset();closeModal('alumniModal');renderAll();toast('Alumni record saved.')});
+document.getElementById('careerForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);db.careers.unshift(f);saveDB(db);logEvent('CAREER','Added opportunity '+f.role);e.target.reset();closeModal('careerModal');renderAll();toast('Career opportunity saved.')});
+document.getElementById('partnerForm').addEventListener('submit',e=>{e.preventDefault();const f=formObj(e.target);db.partners.unshift(f);saveDB(db);logEvent('PARTNER','Added partner '+f.company);e.target.reset();closeModal('partnerModal');renderAll();toast('Industry partner saved.')});
+
+function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gallegan-cares-virtual-database.json';a.click();URL.revokeObjectURL(a.href);toast('Virtual database exported as JSON.')}
+function exportStudentsCSV(){const heads=['Student ID','Name','Email','Mobile','Program','Type','Status','Enrollment','Source','Owner','Location'];const rows=db.students.map(s=>[s.id,s.name,s.email,s.mobile,s.program,s.type,s.status,s.enrollment,s.source,s.owner,s.location]);const csv=[heads,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gallegan-students.csv';a.click();URL.revokeObjectURL(a.href);toast('Student CSV exported.')}
+function resetData(){if(!confirm('Reset the virtual database and remove all locally saved records?'))return;db=baseDB();saveDB(db);renderAll();toast('Virtual database reset.')}
+
+seedDemo(false);renderAll();
+</script>
+</body>
+</html>
